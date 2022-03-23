@@ -32,7 +32,8 @@ final Note note;
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme.headline6;
-  
+  updateTitle();
+  updateDescription();
    return WillPopScope(
       onWillPop:  () async
       {
@@ -100,6 +101,7 @@ final Note note;
             ),
             TextField(
               controller: DescriptionController,
+              
               decoration: InputDecoration(
                   labelText: 'Description',
                   hintText: 'Enter the detail description',
@@ -201,18 +203,18 @@ return true;
 	}
 
  void updateTitle(){
-    note.title = Titlecontroller.text;
+    Titlecontroller.text= note.title ;
   }
 
 	// Update the description of Note object
 	void updateDescription() {
-		note.description = DescriptionController.text;
+		DescriptionController.text=note.description;
 	}
 
 	// Save data to database
 	void save() async {
 
-		
+		 movetolastscreen();
 
 		note.date = DateFormat.yMMMd().format(DateTime.now());
 		int result;
@@ -231,13 +233,14 @@ return true;
     print(result);
 	
 		if (result != 0) {  // Success
+
 			_showAlertDialog('Status', 'Note Saved Successfully');
 	
     } else {  // Failure
 			_showAlertDialog('Status', 'Problem Saving Note');
 	
     }
-   movetolastscreen();
+  
 
 	}
   void _showAlertDialog(String title, String message) {
@@ -248,12 +251,12 @@ return true;
 		);
 		showDialog(
 				context: context,
-				builder: (BuildContext) => alertDialog
+				builder: ( BuildContext BuildContext ) { return alertDialog;}
 		);
 	}
   void _delete() async {
 
-	
+	movetolastscreen();
 
 		// Case 1: If user is trying to delete the NEW NOTE i.e. he has come to
 		// the detail page by pressing the FAB of NoteList page.
@@ -269,7 +272,7 @@ return true;
 		} else {
 			_showAlertDialog('Status', 'Error Occured while Deleting Note');
 		}	
-    movetolastscreen();
+    
 	}
 
 }
