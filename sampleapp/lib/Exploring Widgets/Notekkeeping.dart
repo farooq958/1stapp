@@ -16,7 +16,7 @@ class noteslist extends StatefulWidget {
 
 class Noteliststate extends State<noteslist> {
   DatabaseHelper databaseHelper = DatabaseHelper();
-	    List<Note> noteList=[];
+	   late List<Note> noteList=[];
   var count = 0;
 
 
@@ -38,7 +38,7 @@ class Noteliststate extends State<noteslist> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print("check");
-        navigateTodetail(Note('Add Note', '', 1), 'Add Note');
+        navigateTodetail(Note('', '', 1), 'Add Note');
         },
         child: Icon(Icons.add),
       ),
@@ -69,7 +69,7 @@ class Noteliststate extends State<noteslist> {
             onTap: ()
             {
               navigateTodetail(this.noteList[index],"Edit Note");
-              print(this.noteList[index]);
+              print(this.noteList[index].id);
             },
           ),
         );
@@ -119,7 +119,7 @@ class Noteliststate extends State<noteslist> {
 	}
   void delete(BuildContext context, Note note) async {
 
-		int result = await databaseHelper.deleteNote(note.id);
+		int result = await databaseHelper.deleteNote(note.id!);
 		if (result != 0) {
 			showSnackBar(context, 'Note Deleted Successfully');
 			updateListView();

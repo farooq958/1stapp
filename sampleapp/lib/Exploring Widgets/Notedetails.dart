@@ -6,9 +6,10 @@ import 'package:sampleapp/Model/Note.dart';
 import 'package:sampleapp/Utilities/database_helper.dart';
 
 
+
 class notedetails extends StatefulWidget {
   final String? apptitle;
-  final Note note;
+  final note;
   notedetails( this.note,this.apptitle);
   
   @override
@@ -216,11 +217,11 @@ return true;
 		note.date = DateFormat.yMMMd().format(DateTime.now());
 		int result;
   
-  print(note.id.toString() + ' id');
-   movetolastscreen();
+ // print(note.id.toString() + ' id');
+   
+  int? check= null;
   
-  
-		if (note.title == 'Add Note' ) {  // Case 1: Update operation
+		if (note.id == check ) {  // Case 1: Update operation
 	result = await helper.insertNote(note);
 //return;
 		} 
@@ -236,7 +237,7 @@ return true;
 			_showAlertDialog('Status', 'Problem Saving Note');
 	
     }
-   
+   movetolastscreen();
 
 	}
   void _showAlertDialog(String title, String message) {
@@ -247,7 +248,7 @@ return true;
 		);
 		showDialog(
 				context: context,
-				builder: (_) => alertDialog
+				builder: (BuildContext) => alertDialog
 		);
 	}
   void _delete() async {
@@ -262,7 +263,7 @@ return true;
 		}
 
 		// Case 2: User is trying to delete the old note that already has a valid ID.
-		int result = await helper.deleteNote(note.id);
+		int result = await helper.deleteNote(note.id!);
 		if (result != 0) {
 			_showAlertDialog('Status', 'Note Deleted Successfully');
 		} else {
