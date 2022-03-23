@@ -24,16 +24,25 @@ class notedetailsstate extends State<notedetails> {
   var DescriptionController = TextEditingController();
   DatabaseHelper helper = DatabaseHelper();
 
-final String? apptitle;
-final Note note;
-  notedetailsstate(this.note,this.apptitle);
- 
+ String? apptitle;
+late Note note;
+  notedetailsstate(  Note note,String? apptitle)
+  {
+    this.note = note;
+    this.apptitle=apptitle;
+    String? check = null;
+   if(note.title != check && note.description != check)
+   {
+     updateTitle();
+  updateDescription();
 
+   }
+  }
+ 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme.headline6;
-  updateTitle();
-  updateDescription();
+  
    return WillPopScope(
       onWillPop:  () async
       {
@@ -90,7 +99,7 @@ final Note note;
               onChanged: (value) {
                 print('something change i.e $value');
                setState(() {
-                  updateTitle();
+                  //updateTitle();
                });
                
               },
@@ -110,7 +119,7 @@ final Note note;
               onChanged: (value) {
                 print('something change in description field i.e $value');
                setState(() {
-                  updateDescription();
+                 // updateDescription();
                });
                
               },
